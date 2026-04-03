@@ -4,23 +4,23 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
 import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
-import { SECTORS } from "@/lib/schemas/company";
 import { Search } from "lucide-react";
 
 const sortOptions = [
   { value: "created_at:desc", label: "Newest first" },
   { value: "created_at:asc", label: "Oldest first" },
-  { value: "company_name:asc", label: "Name A–Z" },
-  { value: "company_name:desc", label: "Name Z–A" },
-  { value: "score:desc", label: "Highest score" },
-  { value: "score:asc", label: "Lowest score" },
-  { value: "founded_year:desc", label: "Founded newest" },
-  { value: "founded_year:asc", label: "Founded oldest" },
+  { value: "product_name:asc", label: "Name A–Z" },
+  { value: "product_name:desc", label: "Name Z–A" },
+  { value: "target_market_fit:desc", label: "Best market fit" },
+  { value: "target_market_fit:asc", label: "Lowest market fit" },
 ];
 
-const sectorOptions = SECTORS.map((s) => ({ value: s, label: s }));
+const exportOptions = [
+  { value: "true", label: "Export ready" },
+  { value: "false", label: "Not ready" },
+];
 
-export function CompanyFilters({ basePath = "/dashboard" }: { basePath?: string }) {
+export function ProductFilters() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -32,9 +32,9 @@ export function CompanyFilters({ basePath = "/dashboard" }: { basePath?: string 
       } else {
         params.delete(key);
       }
-      router.push(`${basePath}?${params.toString()}`);
+      router.push(`/dashboard/products?${params.toString()}`);
     },
-    [router, searchParams, basePath]
+    [router, searchParams]
   );
 
   return (
@@ -42,18 +42,18 @@ export function CompanyFilters({ basePath = "/dashboard" }: { basePath?: string 
       <div className="relative flex-1">
         <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
         <Input
-          placeholder="Search companies..."
+          placeholder="Search products..."
           defaultValue={searchParams.get("q") ?? ""}
           onChange={(e) => updateParam("q", e.target.value)}
           className="pl-9"
         />
       </div>
       <Select
-        options={sectorOptions}
-        placeholder="All sectors"
-        value={searchParams.get("sector") ?? ""}
-        onChange={(e) => updateParam("sector", e.target.value)}
-        className="sm:w-48"
+        options={exportOptions}
+        placeholder="All statuses"
+        value={searchParams.get("export") ?? ""}
+        onChange={(e) => updateParam("export", e.target.value)}
+        className="sm:w-44"
       />
       <Select
         options={sortOptions}

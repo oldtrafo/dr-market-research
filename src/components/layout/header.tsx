@@ -8,14 +8,19 @@ export async function Header() {
 
   return (
     <header className="border-b border-gray-200 bg-white">
-      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
-        <div className="flex items-center gap-2.5">
+      <div className="flex h-14 items-center justify-between px-4 sm:px-6">
+        <div className="flex items-center gap-2.5 lg:hidden">
           <DRFlag className="h-5 w-auto rounded-sm shadow-sm" />
-          <h1 className="text-lg font-bold text-gray-900">DR Market Research</h1>
+          <span className="text-sm font-bold text-gray-900">DR Market Research</span>
         </div>
-        <div className="flex items-center gap-4">
-          <span className="hidden text-sm text-gray-500 sm:inline">{user?.email}</span>
-          <DRFlag className="h-6 w-auto rounded-sm shadow-sm sm:hidden" />
+        <div className="hidden lg:block" />
+        <div className="flex items-center gap-3">
+          <div className="hidden items-center gap-2 sm:flex">
+            <div className="h-7 w-7 rounded-full bg-blue-100 flex items-center justify-center text-xs font-semibold text-blue-700">
+              {user?.email?.charAt(0).toUpperCase()}
+            </div>
+            <span className="text-sm text-gray-600">{user?.email}</span>
+          </div>
           <LogoutButton />
         </div>
       </div>
